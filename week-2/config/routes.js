@@ -1,8 +1,10 @@
 const express = require('express')
 const routes = express.Router()
 const userController = require('../controllers/userController')
+const userMiddlewares = require('../middlewares/userMiddlewares')
+const { newRegister } = require('../models/userModels')
 
-routes.post('/user/register')
+routes.post('/user/register', userMiddlewares.validateBody, userController.newRegister)
 
 routes.post('/user/login')
 
@@ -31,33 +33,6 @@ routes.get('/user', userController.getAll)
 
 routes.get('/', (req,res) =>{
     return res.json(db)
-})
-
-
-routes.get('/hello', (req,res) => {
-    return res.send('hello wolrd') 
-})
-
-routes.post('/add', (req,res) => {
-    const body = req.body
-    if(!body) 
-        return res.status(400).end()
-    
-    db.push(body)
-    return res.json(body)
-})
-
-routes.delete('/:id', (req,res) => {
-    const id = req.params.id
-
-    let newDb = db.filter(item => {
-        if(!item[id]){
-            return item
-        }
-    })
-
-    db = newDb
-    return res.send(newDb)
 })
 
 
