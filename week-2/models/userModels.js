@@ -1,3 +1,4 @@
+const { validateEmail1 } = require('../middlewares/userMiddlewares')
 const connection = require('./connection')
 
 const getAll =  async() => {
@@ -29,9 +30,30 @@ const updateAccount = async(id,user) =>{
     return updateAccount
 }
 
+
+const validateEmail =  async (req, res) => {
+    const { body } = req
+    const validate = validateEmail1(body.email) 
+        if(!validate){
+            return res.status(401).json({message: "This email is invaled"})
+        } else {
+            console.log("Fuction Erro")
+        }
+    const checkEmailQuery = 'SELECT * FROM login WHERE email = ?'
+    const [existingUsers] = await connection.execute(checkEmailQuery, [body.email])
+
+    const message = {}
+
+    if (existingUsers.length > 0) {
+        message.email = "This email already exists"
+        return res.status(409).json(message)
+    }
+}
+
 module.exports = {
     getAll,
     newRegister,
     deleteAccount,
-    updateAccount
+    updateAccount,
+    validateEmail
 }
