@@ -8,15 +8,15 @@ routes.post('/user/register', userMiddlewares.validateBody, userController.newRe
 
 routes.post('/user/login')
 
-routes.delete('/user')
+routes.delete('/user/:id', userController.deleteAccount)
 
-routes.get('/user')
+routes.get('/user', userController.getAll)
 
 routes.post('/user/forgot')
 
 routes.post('/user/reset')
 
-routes.patch('/user')
+routes.put('/user/:id', userMiddlewares.validateBody,userController.updateAccount)
 
 routes.post('/product')
 
@@ -27,13 +27,6 @@ routes.get('/product')
 routes.get('/product/one/:name')
 
 routes.get('/product/list')
-
-
-routes.get('/user', userController.getAll)
-
-routes.get('/', (req,res) =>{
-    return res.json(db)
-})
 
 
 module.exports = routes
