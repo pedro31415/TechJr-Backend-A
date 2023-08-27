@@ -10,7 +10,21 @@ const newRegister =  async(req,res) => {
     return res.status(201).json(createdAccount)
 }
 
+const deleteAccount = async(req,res) => {
+    const {id} = req.params
+    await userModel.deleteAccount(id)
+    return res.status(204).json();
+}
+
+const updateAccount = async(req,res) =>{
+    const {id} = req.params
+    await userModel.updateAccount(id, req.body)
+    return res.status(204).json()
+}
+
 module.exports = {
     getAll,
-    newRegister
+    newRegister,
+    deleteAccount,
+    updateAccount
 }
