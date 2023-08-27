@@ -2,9 +2,9 @@ const express = require('express')
 const routes = express.Router()
 const userController = require('../controllers/userController')
 const userMiddlewares = require('../middlewares/userMiddlewares')
-const { newRegister } = require('../models/userModels')
+const userModels = require('../models/userModels')
 
-routes.post('/user/register', userMiddlewares.validateBody, userController.newRegister)
+routes.post('/user/register', userModels.validateEmail, userMiddlewares.validateBody,userController.newRegister)
 
 routes.post('/user/login')
 
