@@ -1,3 +1,13 @@
+
+try {
+    function validateEmail1(email) {
+        let re = /\S+@acad.ifma.edu.br+/;
+        return re.test(email);
+      }
+} catch {
+    return console.log("Fuction Erro!")
+}
+
 const validateBody = (req, res, next) => {
     const {body} = req;
     if(body.name === undefined || body.email === undefined || body.password === undefined){
@@ -21,7 +31,7 @@ const validateBody = (req, res, next) => {
     next();
 }
 
-
 module.exports = {
-    validateBody
+    validateBody,
+    validateEmail1
 }
