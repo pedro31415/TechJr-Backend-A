@@ -26,12 +26,22 @@ const deleteAccount = async(id) =>{
 const updateAccount = async(id,user) =>{
     const query = 'UPDATE login SET name = ?, email = ?, password = ? WHERE id = ?'
     const {name,email,password} = user
+    console.log(name)
+    console.log(email)
+    console.log(password)
     const updateAccount = await connection.execute(query, [name,email,password,id])
     return updateAccount
 }
 
 
-const validateEmail =  async (req, res) => {
+const createToken = async(user) =>{
+    const query = 'SELECT * FROM login WHERE email = ? AND password = ?'
+    const {email,password} = user
+    const [createdToken] = await connection.execute(query, [email,password])
+    return createdToken
+}
+
+const validateEmail =  async (req, res, next) => {
     const { body } = req
     const validate = validateEmail1(body.email) 
         if(!validate){
@@ -48,6 +58,8 @@ const validateEmail =  async (req, res) => {
         message.email = "This email already exists"
         return res.status(409).json(message)
     }
+
+    next();
 }
 
 module.exports = {
@@ -55,5 +67,6 @@ module.exports = {
     newRegister,
     deleteAccount,
     updateAccount,
-    validateEmail
+    validateEmail,
+    createToken
 }
