@@ -1,4 +1,3 @@
-
 try {
     function validateEmail1(email) {
         let re = /\S+@acad.ifma.edu.br+/;
