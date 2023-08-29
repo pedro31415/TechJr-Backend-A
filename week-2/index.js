@@ -3,6 +3,8 @@ const morgan = require('morgan')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const dotenv = require('dotenv')
+require("dotenv-safe").config()
+const jwt = require('jsonwebtoken')
 
 const app = express()
 app.use(express.json())
