@@ -8,9 +8,9 @@ routes.post('/user/register', userMiddlewares.validateBody,userModels.validateEm
 
 routes.post('/user/login', userMiddlewares.validateTokenEmail, userMiddlewares.validateToken, userController.createToken)
 
-routes.delete('/user/:id', userController.deleteAccount)
+routes.delete('/user/:id', userMiddlewares.verifyJWT, userController.deleteAccount)
 
-routes.get('/user', userController.getAll)
+routes.get('/user', userMiddlewares.verifyJWT, userController.getAll)
 
 routes.post('/user/forgot')
 
