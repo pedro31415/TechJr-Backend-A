@@ -30,7 +30,27 @@ const validateBody = (req, res, next) => {
     next();
 }
 
+const validateToken = (req, res, next) => {
+    const {body} = req
+    if(body.email === undefined){
+             return res.status(404).json({message: "This email is invaled"})
+      }
+
+    next();
+}
+
+const validateTokenEmail = (req, res, next) => {
+    const {body} = req
+    if (body.email === undefined || body.email === '') {
+        return res.status(400).json({message: "This email is invaled"})
+    }
+
+    next()
+}
+
 module.exports = {
     validateBody,
-    validateEmail1
+    validateEmail1,
+    validateToken,
+    validateTokenEmail
 }
