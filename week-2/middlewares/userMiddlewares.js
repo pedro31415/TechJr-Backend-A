@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken')
+
 try {
     function validateEmail1(email) {
         let re = /\S+@acad.ifma.edu.br+/;
@@ -6,6 +8,21 @@ try {
 } catch {
     return console.log("Fuction Erro!")
 }
+
+const  verifyJWT = (req, res, next) => {
+    const token = req.headers['x-access-token']
+    console.log(token)
+    jwt.verify(token, process.env.SECRET, (err, decode) =>{
+        if(err){
+            console.log(process.env.SECRET)
+            console.log(err)
+            return res.status(401).end();
+        }
+        req.userId = decode.userId
+        next()
+    })
+}
+
 
 const validateBody = (req, res, next) => {
     const {body} = req;
@@ -24,10 +41,10 @@ const validateBody = (req, res, next) => {
         missingFields.password = "Password is missing";
     }
     
-    return res.status(400).json(missingFields);
+    return res.status(400).json(missingFields)
     }
 
-    next();
+    next()
 }
 
 const validateToken = (req, res, next) => {
@@ -36,7 +53,7 @@ const validateToken = (req, res, next) => {
              return res.status(404).json({message: "This email is invaled"})
       }
 
-    next();
+    next()
 }
 
 const validateTokenEmail = (req, res, next) => {
@@ -52,5 +69,6 @@ module.exports = {
     validateBody,
     validateEmail1,
     validateToken,
-    validateTokenEmail
+    validateTokenEmail,
+    verifyJWT
 }
