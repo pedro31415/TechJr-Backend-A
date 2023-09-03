@@ -24,19 +24,18 @@ const updateAccount = async(req,res) =>{
 }
 
  const createToken = async(req,res) =>{
-     const {id} = req.params
-      const {email,password} = await userModel.createToken(id, req.body)
-      console.log(req.body.email)
-      console.log(req.body.password)
-      console.log(email)
-      console.log(password)
-         const id2 = id 
-         const token = jwt.sign({ id2 }, process.env.SECRET, {
-           expiresIn: 300 
-        });
-        return res.json({ auth: true, token: token });
-       
- }
+     const {id} = req.params 
+     const email = await userModel.createToken2(req.body) 
+     console.log(email)
+     console.log(req.body)
+        if(req.body.email == email.email){
+            const token = jwt.sign({ id }, process.env.SECRET, {
+                expiresIn: 300 
+             })
+             return res.json({ auth: true, token: token })
+        } 
+      }      
+
 
 module.exports = {
     getAll,
