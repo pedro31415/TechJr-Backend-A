@@ -6,7 +6,7 @@ const userModels = require('../models/userModels')
 
 routes.post('/user/register', userMiddlewares.validateBody,userModels.validateEmail,userController.newRegister)
 
-routes.post('/user/login',  userController.createToken)
+routes.post('/user/login', userMiddlewares.validateTokenEmail, userMiddlewares.validateToken, userController.createToken)
 
 routes.delete('/user/:id', userController.deleteAccount)
 
