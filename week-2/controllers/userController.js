@@ -23,6 +23,7 @@ const updateAccount = async(req,res) =>{
     return res.status(204).json()
 }
 
+
  const createToken = async(req,res) =>{
      const {id} = req.params 
      const email = await userModel.createToken2(req.body) 
